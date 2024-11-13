@@ -1,34 +1,17 @@
 <h1><%= @article.title %></h1>
 <p><%= @article.body %></p>
+<!-- COMMENTS -->
+<h2>Comments</h2>
+<%= render @article.comments %>
+<!-- NEW COMMENTS CREATION AREA -->
+<h2>Add a comment:</h2>
+<%= render "comments/form", article: @article %>
+<!-- NAVIGATION -->
 <ul>
-  <li><%= link_to 'Edit', edit_article_path(@article) %></li>
-  <li><%= link_to 'Destroy', articles_path(@article), data: {
+  <li><%= link_to "Edit", edit_article_path(@article) %></li>
+  <li><%= link_to "Delete", article_path(@article), data: {
     turbo_method: :delete,
     turbo_confirm: "Are you sure?"
   } %></li>
-  <li><%= link_to 'Back', articles_path %></li>
+  <li><%= link_to "Back", articles_path %></li>
 </ul>
-<h2>Comments</h2>
-<% @article.comments.each do |comment| %>
-  <p>
-    <strong>Commenter:</strong>
-    <%= comment.commenter %>
-  </p>
-  <p>
-    <strong>Comment:</strong>
-    <%= comment.body %>
-  </p>
-<% end %>
-<h2>Add a comment:</h2>
-<%= form_with model: [@article, @article.comments.build] do |form| %>
-  <p>
-    <%= form.label :commenter %><br>
-    <%= form.text_field :commenter %>
-  </p>
-  <p>
-    <%= form.label :body %><br>
-    <%= form.text_area :body %>
-  <p>
-    <%= form.submit %>
-  </p>
-<% end %>

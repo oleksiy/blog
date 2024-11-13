@@ -1,0 +1,12 @@
+<% unless comment.archived? %>
+  <!-- person who left a comment -->
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  </p>
+  <!-- actual comment -->
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+  </p>
+<% end %>
