@@ -15,10 +15,11 @@ class ArticlesController < ApplicationController
     #render plain: params[:article].inspect
     @article = Article.new(article_params)
     if @article.save
-      #redirect_to @article
+      # you need this, otherwise, the user can reload the page and resubmit the same DB entry twice
       redirect_to @article
     else
-      render :new, status: :unprocessable_entity
+      #unprocessable_entity was previously here but didn't map to anything, it's wrapped in content
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -31,18 +32,19 @@ class ArticlesController < ApplicationController
     if @article.update(article_params)
       redirect_to @article
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
   def destroy
     @article = Article.find(params[:id])
     @article.destroy
+
     redirect_to root_path, status: :see_other
   end
 
   private
     def article_params
-      params.require(:article).permit(:title, :body)
+      params.expect(article: [:title, :body])
     end
 end
