@@ -2,31 +2,10 @@
 <p><%= @article.body %></p>
 <!-- COMMENTS -->
 <h2>Comments</h2>
-<% @article.comments.each do |comment| %>
-  <p>
-    <strong>Commenter:</strong>
-    <%= comment.commenter %>
-  </p>
-  <p>
-    <strong>Comment:</strong>
-    <%= comment.body %>
-  </p>
-<% end %>
+<%= render @article.comments %>
 <!-- NEW COMMENTS CREATION AREA -->
 <h2>Add a comment:</h2>
-<%= form_with model: [ @article, @article.comments.build ] do |form| %>
-  <p>
-    <%= form.label :commenter %><br>
-    <%= form.text_field :commenter %>
-  </p>
-  <p>
-    <%= form.label :body %><br>
-    <%= form.textarea :body %>
-  </p>
-  <p>
-    <%= form.submit %>
-  </p>
-<% end %>
+<%= render "comments/form", article: @article %>
 <!-- NAVIGATION -->
 <ul>
   <li><%= link_to "Edit", edit_article_path(@article) %></li>
