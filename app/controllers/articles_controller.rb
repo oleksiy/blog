@@ -18,6 +18,7 @@ class ArticlesController < ApplicationController
     # render plain: params[:article].inspect
     @article = Article.new(article_params)
     if @article.save
+      ARTICLE_COUNTER.increment
       # you need this, otherwise, the user can reload the page and resubmit the same DB entry twice
       redirect_to @article
     else
@@ -42,7 +43,7 @@ class ArticlesController < ApplicationController
   def destroy
     @article = Article.find(params[:id])
     @article.destroy
-
+    ARTICLE_COUNTER.increment(by: -1)
     redirect_to root_path, status: :see_other
   end
 
