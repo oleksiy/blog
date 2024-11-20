@@ -149,6 +149,8 @@ GEM
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
+    prometheus-client (4.2.3)
+      base64
     psych (5.2.0)
       stringio
     public_suffix (6.0.1)
@@ -269,6 +271,7 @@ DEPENDENCIES
   debug
   importmap-rails
   jbuilder
+  prometheus-client (~> 4.2, >= 4.2.3)
   puma (~> 6.4.3)
   rails (~> 8.0)
   redis (~> 4.0)

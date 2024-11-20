@@ -51,6 +51,9 @@ gem 'bootsnap', require: false
 # to fix ambiguity for psych
 gem 'stringio', '~> 3.1.2'
 
+# prometheus
+gem 'prometheus-client', '~> 4.2', '>= 4.2.3'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
