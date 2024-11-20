@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ArticlesController < ApplicationController
-  http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
+  http_basic_authenticate_with name: 'dhh', password: 'secret', except: %i[index show]
   def index
     @articles = Article.all
   end
@@ -13,13 +15,14 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    #render plain: params[:article].inspect
+    # render plain: params[:article].inspect
     @article = Article.new(article_params)
     if @article.save
+      ARTICLE_COUNTER.increment
       # you need this, otherwise, the user can reload the page and resubmit the same DB entry twice
       redirect_to @article
     else
-      #unprocessable_entity was previously here but didn't map to anything, it's wrapped in content
+      # unprocessable_entity was previously here but didn't map to anything, it's wrapped in content
       render :new, status: :unprocessable_content
     end
   end
@@ -40,12 +43,13 @@ class ArticlesController < ApplicationController
   def destroy
     @article = Article.find(params[:id])
     @article.destroy
-
+    ARTICLE_COUNTER.increment(by: -1)
     redirect_to root_path, status: :see_other
   end
 
   private
-    def article_params
-      params.expect(article: [:title, :body, :status])
-    end
+
+  def article_params
+    params.expect(article: %i[title body status])
+  end
 end
