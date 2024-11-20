@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class CommentsController < ApplicationController
-  http_basic_authenticate_with name: "admin", password: "secret", only: :destroy
+  http_basic_authenticate_with name: 'admin', password: 'secret', only: :destroy
   def create
     @article = Article.find(params[:article_id])
     @comment = @article.comments.create(comment_params)
@@ -14,7 +16,8 @@ class CommentsController < ApplicationController
   end
 
   private
-    def comment_params
-      params.expect(comment: [:commenter, :body, :status])
-    end
+
+  def comment_params
+    params.expect(comment: %i[commenter body status])
+  end
 end
